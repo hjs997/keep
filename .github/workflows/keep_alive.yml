@@ -1,0 +1,15 @@
+name: Keep Hugging Face Space Alive
+
+on:
+  schedule:
+    - cron: '*/10 * * * *'  # 每 10 分钟执行一次
+  workflow_dispatch:  # 允许手动触发
+
+jobs:
+  keep_alive:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send Request to Keep Space Alive
+        run: |
+          curl -H "Authorization: Bearer ${{ secrets.HF_TOKEN }}" \
+               -s ${{ secrets.HF_SPACE_URL }} > /dev/null
